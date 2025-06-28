@@ -973,7 +973,7 @@ body, html {
 }
 /* ✅ Force and reduce contact form width */
 .contact-form {
-  max-width: 500px !important; /* You can adjust: try 500px or 450px */
+  max-width: 350px !important; /* You can adjust: try 500px or 450px */
   margin: 0 auto !important;
   padding: 1.5rem !important;
 }
@@ -984,4 +984,5 @@ body, html {
 .contact-form button {
   width: 100% !important;
   box-sizing: border-box !important;
+}
 }
