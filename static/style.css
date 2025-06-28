@@ -845,3 +845,67 @@ section {
     transform: translateY(0) !important;
   }
 }
+/* ✅ Always show scroll-animate content on mobile */
+@media (max-width: 768px) {
+  .scroll-animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+
+/* ✅ Fix horizontal overflow issues */
+body, html {
+  overflow-x: hidden;
+}
+
+.container,
+.nav-container,
+.contact-content,
+.contact-form {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Extra safety for navbar toggle on mobile */
+.nav-toggle {
+  margin: 0;
+  padding: 0;
+}
+/* ✅ Always show scroll-animate content on mobile */
+@media (max-width: 768px) {
+  .scroll-animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+
+/* ✅ Fix horizontal overflow issues */
+body, html {
+  overflow-x: hidden;
+}
+
+.container,
+.nav-container,
+.contact-content,
+.contact-form {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Extra safety for navbar toggle on mobile */
+.nav-toggle {
+  margin: 0;
+  padding: 0;
+}
