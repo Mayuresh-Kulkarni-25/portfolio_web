@@ -865,3 +865,13 @@ section {
     box-sizing: border-box !important;
   }
 }
+@media (max-width: 768px) {
+  .nav-toggle {
+    margin-left: 10px; /* You can adjust: 10px or 15px if you'd like more shift */
+  }
+}
+@media (max-width: 768px) {
+  .contact-form {
+    margin-left: 5%; /* Slightly push form towards left */
+  }
+}
