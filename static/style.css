@@ -909,3 +909,28 @@ body, html {
   margin: 0;
   padding: 0;
 }
+/* ✅ Force all containers to respect screen width */
+.container,
+.contact-content,
+.contact-form,
+.form-group,
+.form-group input,
+.form-group textarea {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Reset any unexpected margin or padding on small screens */
+@media (max-width: 768px) {
+  .container,
+  .contact-content,
+  .contact-form,
+  .form-group,
+  .form-group input,
+  .form-group textarea {
+    margin: 0;
+    padding: 0;
+  }
+}
+/* ✅ Ensure no horizontal overflow */
