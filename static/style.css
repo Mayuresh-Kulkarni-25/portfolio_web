@@ -838,3 +838,10 @@ section {
   opacity: 1;
   transform: translateY(0);
 }
+
+@media (max-width: 768px) {
+  .scroll-animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
