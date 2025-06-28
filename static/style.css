@@ -38,7 +38,6 @@ body {
   line-height: 1.6;
   color: var(--text-primary);
   background-color: var(--bg-primary);
-  overflow-x: hidden; /* ✅ Prevent horizontal scroll everywhere */
 }
 
 .container {
@@ -47,6 +46,7 @@ body {
   padding: 0 2rem;
 }
 
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.2;
@@ -65,6 +65,7 @@ p {
   color: var(--text-secondary);
 }
 
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -103,7 +104,7 @@ p {
   transform: translateY(-2px);
 }
 
-/* Navbar */
+/* Navigation */
 .navbar {
   position: fixed;
   top: 0;
@@ -168,8 +169,6 @@ p {
   display: none;
   flex-direction: column;
   cursor: pointer;
-  margin: 0;
-  padding: 0;
 }
 
 .bar {
@@ -180,10 +179,9 @@ p {
   transition: var(--transition);
 }
 
-/* Sections */
+/* Section Styles */
 section {
   padding: 6rem 0;
-  scroll-margin-top: 80px; /* ✅ Fix section scroll offset on mobile */
 }
 
 .section-title {
@@ -205,12 +203,417 @@ section {
   border-radius: 2px;
 }
 
-/* Contact Form */
+/* Hero Section */
+.hero {
+  padding: 8rem 0 6rem;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.highlight {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.hero-description {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.profile-card {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-xl);
+  text-align: center;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  overflow: hidden;
+  border: 4px solid var(--primary-color);
+  box-shadow: var(--shadow-md);
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.profile-info h3 {
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.profile-info p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.profile-location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--text-light);
+}
+
+/* About Section */
+.about {
+  background-color: var(--bg-secondary);
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-text p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.highlight-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.highlight-item i {
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.highlight-item span {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Skills Section */
+.skills-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.skill-category {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+.skill-category:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.category-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.skill-tag {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: white;
+  transition: var(--transition);
+  cursor: default;
+}
+
+.skill-tag:hover {
+  transform: scale(1.05);
+}
+
+.skill-tag.programming {
+  background: linear-gradient(135deg, #3B82F6, #1E40AF);
+}
+
+.skill-tag.design {
+  background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+}
+
+.skill-tag.technical {
+  background: linear-gradient(135deg, #10B981, #059669);
+}
+
+.skill-tag.competency {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+}
+
+/* Proficiency Section */
+.proficiency-section {
+  background: white;
+  padding: 3rem;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.proficiency-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}
+
+.proficiency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+}
+
+.proficiency-category h4 {
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.skill-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.skill-name {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.skill-bar {
+  height: 8px;
+  background-color: var(--bg-tertiary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skill-progress {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 2s ease;
+  width: 0%;
+}
+
+.programming-progress {
+  background: linear-gradient(90deg, #3B82F6, #1E40AF);
+}
+
+.design-progress {
+  background: linear-gradient(90deg, #8B5CF6, #7C3AED);
+}
+
+.technical-progress {
+  background: linear-gradient(90deg, #10B981, #059669);
+}
+
+.skill-percentage {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+/* Education Section */
+.education {
+  background-color: var(--bg-secondary);
+}
+
+.education-content {
+  display: grid;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.education-item {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+.education-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.education-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.education-details h3 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.education-institution {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.education-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Contact Section */
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-item {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.contact-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.contact-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.contact-details h3 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.contact-details p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
 .contact-form {
   background: white;
   padding: 2rem;
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
+}
+
+.contact-form h3 {
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
 }
 
 .form-group {
@@ -226,7 +629,6 @@ section {
   font-size: 1rem;
   transition: var(--transition);
   font-family: inherit;
-  box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -241,44 +643,68 @@ section {
   min-height: 120px;
 }
 
-/* Scroll animations */
-.scroll-animate {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
+/* Footer */
+.footer {
+  background-color: var(--text-primary);
+  color: white;
+  padding: 2rem 0;
 }
 
-.scroll-animate.animate {
-  opacity: 1;
-  transform: translateY(0);
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* ✅ Fix skills section blank on mobile */
-@media (max-width: 768px) {
-  .scroll-animate {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
+.footer-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-links a {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  background: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* ✅ Improve contact form look and fix overflow on mobile */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .contact-form {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .nav-container {
     padding: 1rem;
   }
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  .form-group input,
-  .form-group textarea {
-    padding: 0.75rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
 
-/* Responsive Navbar */
-@media (max-width: 768px) {
   .nav-menu {
     position: fixed;
     left: -100%;
@@ -311,4 +737,220 @@ section {
   .nav-toggle.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
   }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  section {
+    padding: 4rem 0;
+  }
+
+  .skills-categories {
+    grid-template-columns: 1fr;
+  }
+
+  .proficiency-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .education-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
 }
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.125rem;
+  }
+
+  .skill-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .skill-bar {
+    order: 2;
+  }
+
+  .skill-percentage {
+    order: 3;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Scroll animations */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.scroll-animate.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .scroll-animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+/* ✅ Always show scroll-animate content on mobile */
+@media (max-width: 768px) {
+  .scroll-animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+
+/* ✅ Fix horizontal overflow issues */
+body, html {
+  overflow-x: hidden;
+}
+
+.container,
+.nav-container,
+.contact-content,
+.contact-form {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Extra safety for navbar toggle on mobile */
+.nav-toggle {
+  margin: 0;
+  padding: 0;
+}
+/* ✅ Always show scroll-animate content on mobile */
+@media (max-width: 768px) {
+  .scroll-animate {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+
+/* ✅ Fix horizontal overflow issues */
+body, html {
+  overflow-x: hidden;
+}
+
+.container,
+.nav-container,
+.contact-content,
+.contact-form {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Extra safety for navbar toggle on mobile */
+.nav-toggle {
+  margin: 0;
+  padding: 0;
+}
+/* ✅ Force all containers to respect screen width */
+.container,
+.contact-content,
+.contact-form,
+.form-group,
+.form-group input,
+.form-group textarea {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Reset any unexpected margin or padding on small screens */
+@media (max-width: 768px) {
+  .container,
+  .contact-content,
+  .contact-form,
+  .form-group,
+  .form-group input,
+  .form-group textarea {
+    margin: 0;
+    padding: 0;
+  }
+  /* ✅ Make sure all form elements use box-sizing correctly */
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Constrain the contact form on small screens */
+@media (max-width: 768px) {
+  .contact-form {
+    padding: 1rem; /* Keep some padding for nice look */
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  .form-group input,
+  .form-group textarea {
+    padding: 0.75rem;
+  }
+}
+
+/* ✅ Ensure no horizontal overflow */
