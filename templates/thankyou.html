@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You - Mayuresh Kulkarni</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+      .loader {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid var(--primary-color);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+        margin: 2rem auto;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .countdown-text {
+        margin-top: 1rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+    </style>
+    <script>
+      let countdown = 5;
+      function updateCountdown() {
+        const countdownEl = document.getElementById("countdown");
+        if (countdown > 0) {
+          countdownEl.textContent = countdown;
+          countdown--;
+          setTimeout(updateCountdown, 1000);
+        }
+      }
+
+      window.onload = function() {
+        updateCountdown();
+        setTimeout(function() {
+          window.location.href = "/";
+        }, 5000);
+      }
+    </script>
+  </head>
+  <body>
+    <section class="hero" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+      <div class="hero-container">
+        <div class="hero-content" style="grid-template-columns: 1fr;">
+          <div class="hero-text">
+            <h1 class="hero-title">Thank You!</h1>
+            <p class="hero-subtitle">Your message has been successfully sent.</p>
+            <div class="loader"></div>
+            <p class="countdown-text">Redirecting to home in <span id="countdown">5</span> seconds...</p>
+            <div class="hero-buttons" style="justify-content: center;">
+              <a href="/" class="btn btn-primary">Back to Home Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
