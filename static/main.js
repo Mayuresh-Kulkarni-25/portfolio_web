@@ -50,7 +50,7 @@ window.addEventListener('scroll', () => {
 
 // Animate skill progress bars when they come into view
 const observerOptions = {
-  threshold: 0.5,
+  threshold: 0.1,
   rootMargin: '0px 0px -100px 0px'
 };
 
