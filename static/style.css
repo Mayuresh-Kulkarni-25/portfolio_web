@@ -952,5 +952,22 @@ body, html {
     padding: 0.75rem;
   }
 }
+/* ✅ Constrain and center the contact form */
+.contact-form {
+  max-width: 600px; /* Adjust as needed: smaller = narrower */
+  margin: 0 auto;   /* Center horizontally */
+}
 
-/* ✅ Ensure no horizontal overflow */
+/* ✅ Make inputs & button full width but inside container */
+.contact-form .form-group input,
+.contact-form .form-group textarea,
+.contact-form button {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ✅ Adjust button style for consistent width */
+.contact-form button.btn {
+  display: block;
+  margin-top: 1rem;
+}
