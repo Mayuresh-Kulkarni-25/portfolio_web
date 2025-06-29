@@ -169,6 +169,7 @@ p {
   display: none;
   flex-direction: column;
   cursor: pointer;
+  order: -1;
 }
 
 .bar {
@@ -731,6 +732,19 @@ section {
 
   .nav-container {
     padding: 1rem;
+    justify-content: space-between;
+  }
+
+  .nav-brand {
+    order: 1;
+    flex: 1;
+    text-align: center;
+  }
+
+  .nav-toggle {
+    display: flex;
+    order: -1;
+    margin-left: 0;
   }
 
   .nav-menu {
@@ -749,11 +763,6 @@ section {
 
   .nav-menu.active {
     left: 0;
-  }
-
-  .nav-toggle {
-    display: flex;
-    margin-left: 0;
   }
 
   .nav-toggle.active .bar:nth-child(2) {
