@@ -753,6 +753,7 @@ section {
 
   .nav-toggle {
     display: flex;
+    margin-left: 0;
   }
 
   .nav-toggle.active .bar:nth-child(2) {
@@ -818,6 +819,13 @@ section {
   .contact-content {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .contact-form {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 1.5rem !important;
+    box-sizing: border-box;
   }
 
   .education-item {
@@ -1066,15 +1074,5 @@ section {
   .contact-form button {
     width: 100% !important;
     box-sizing: border-box !important;
-  }
-}
-@media (max-width: 768px) {
-  .nav-toggle {
-    margin-left: 10px;
-  }
-}
-@media (max-width: 768px) {
-  .contact-form {
-    margin-left: 5%;
   }
 }
