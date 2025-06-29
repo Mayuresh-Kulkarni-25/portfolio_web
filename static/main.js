@@ -15,6 +15,21 @@ document.querySelectorAll('.nav-link').forEach(link => {
   });
 });
 
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+    navMenu.classList.remove('active');
+    navToggle.classList.remove('active');
+  }
+});
+
+// Detect mobile device
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+// Optimize animations for mobile
+const animationDuration = isMobile ? 1000 : 1500; // Shorter animations on mobile
+const staggerDelay = isMobile ? 100 : 200; // Faster stagger on mobile
+
 const link = document.createElement("link");
 link.rel = "stylesheet";
 link.type = "text/css";
@@ -28,16 +43,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      // Use smooth scrolling on desktop, instant on mobile for better performance
+      if (isMobile) {
+        target.scrollIntoView({ block: 'start' });
+      } else {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     }
   });
 });
 
-// Navbar background on scroll
-window.addEventListener('scroll', () => {
+// Optimize scroll performance on mobile
+let ticking = false;
+function updateNavbar() {
   const navbar = document.querySelector('.navbar');
   if (window.scrollY > 100) {
     navbar.style.background = 'rgba(255, 255, 255, 0.98)';
@@ -46,12 +67,21 @@ window.addEventListener('scroll', () => {
     navbar.style.background = 'rgba(255, 255, 255, 0.95)';
     navbar.style.boxShadow = 'none';
   }
+  ticking = false;
+}
+
+// Navbar background on scroll (optimized for mobile)
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(updateNavbar);
+    ticking = true;
+  }
 });
 
 // Animate skill progress bars when they come into view
 const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -100px 0px'
+  threshold: isMobile ? 0.05 : 0.1, // Lower threshold on mobile
+  rootMargin: isMobile ? '0px 0px -50px 0px' : '0px 0px -100px 0px' // Smaller margin on mobile
 };
 
 // Track animation state
@@ -68,8 +98,10 @@ const observer = new IntersectionObserver((entries) => {
         hasAnimated = true;
       }
       
-      // Add scroll animation class
-      entry.target.classList.add('animate');
+      // Add scroll animation class (only on desktop)
+      if (!isMobile) {
+        entry.target.classList.add('animate');
+      }
     } else {
       // When section goes out of view, reset animation state
       if (entry.target.classList.contains('proficiency-section')) {
@@ -81,9 +113,39 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
+// Mobile-specific optimizations
+if (isMobile) {
+  // Prevent zoom on form inputs
+  document.querySelectorAll('input, textarea').forEach(input => {
+    input.addEventListener('focus', () => {
+      input.style.fontSize = '16px';
+    });
+  });
+
+  // Add touch feedback for buttons
+  document.querySelectorAll('.btn, .skill-tag, .nav-link').forEach(element => {
+    element.addEventListener('touchstart', () => {
+      element.style.transform = 'scale(0.98)';
+    });
+    
+    element.addEventListener('touchend', () => {
+      element.style.transform = '';
+    });
+  });
+
+  // Optimize scroll performance
+  document.addEventListener('touchmove', (e) => {
+    if (e.target.closest('.nav-menu')) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+}
+
 // Observe elements for scroll animations
 document.querySelectorAll('section, .skill-category, .education-item, .contact-item, .proficiency-section').forEach(el => {
-  el.classList.add('scroll-animate');
+  if (!isMobile) {
+    el.classList.add('scroll-animate');
+  }
   observer.observe(el);
 });
 
@@ -133,30 +195,36 @@ function animateProgressBars() {
       // Stagger the animation with a delay
       setTimeout(() => {
         console.log(`Starting animation for bar ${index}`);
-        // Add shimmer effect
-        bar.classList.add('animating');
+        // Add shimmer effect (only on desktop)
+        if (!isMobile) {
+          bar.classList.add('animating');
+        }
         
         // Animate the progress bar
-        bar.style.transition = 'width 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        bar.style.transition = `width ${animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
         bar.style.width = width + '%';
         
         // Animate the percentage text
         if (percentage) {
-          animatePercentage(percentage, 0, parseInt(width), 1500);
+          animatePercentage(percentage, 0, parseInt(width), animationDuration);
         }
         
-        // Add a subtle pulse effect
-        bar.style.boxShadow = '0 0 10px rgba(59, 130, 246, 0.3)';
-        setTimeout(() => {
-          bar.style.boxShadow = 'none';
-        }, 200);
+        // Add a subtle pulse effect (only on desktop)
+        if (!isMobile) {
+          bar.style.boxShadow = '0 0 10px rgba(59, 130, 246, 0.3)';
+          setTimeout(() => {
+            bar.style.boxShadow = 'none';
+          }, 200);
+        }
         
-        // Remove shimmer effect after animation
-        setTimeout(() => {
-          bar.classList.remove('animating');
-        }, 1500);
+        // Remove shimmer effect after animation (only on desktop)
+        if (!isMobile) {
+          setTimeout(() => {
+            bar.classList.remove('animating');
+          }, animationDuration);
+        }
         
-      }, index * 200); // Stagger each bar by 200ms
+      }, index * staggerDelay); // Use mobile-optimized stagger delay
     });
   }, 100);
 }
