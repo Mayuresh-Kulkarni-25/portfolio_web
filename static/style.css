@@ -467,13 +467,41 @@ section {
   background-color: var(--bg-tertiary);
   border-radius: 4px;
   overflow: hidden;
+  position: relative;
 }
 
 .skill-progress {
   height: 100%;
   border-radius: 4px;
-  transition: width 2s ease;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   width: 0%;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-progress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+  animation-play-state: paused;
+}
+
+.skill-progress.animating::after {
+  animation-play-state: running;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 .programming-progress {

@@ -54,35 +54,133 @@ const observerOptions = {
   rootMargin: '0px 0px -100px 0px'
 };
 
+// Track animation state
+let hasAnimated = false;
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
+    console.log('Observer entry:', entry.target.className, 'isIntersecting:', entry.isIntersecting);
+    
     if (entry.isIntersecting) {
       if (entry.target.classList.contains('proficiency-section')) {
+        console.log('Proficiency section detected, calling animateProgressBars');
         animateProgressBars();
+        hasAnimated = true;
       }
       
       // Add scroll animation class
       entry.target.classList.add('animate');
+    } else {
+      // When section goes out of view, reset animation state
+      if (entry.target.classList.contains('proficiency-section')) {
+        console.log('Proficiency section out of view, resetting animation state');
+        hasAnimated = false;
+        resetProgressBars();
+      }
     }
   });
 }, observerOptions);
 
 // Observe elements for scroll animations
-document.querySelectorAll('section, .skill-category, .education-item, .contact-item').forEach(el => {
+document.querySelectorAll('section, .skill-category, .education-item, .contact-item, .proficiency-section').forEach(el => {
   el.classList.add('scroll-animate');
   observer.observe(el);
 });
 
-// Animate progress bars
-function animateProgressBars() {
+// Reset progress bars to initial state
+function resetProgressBars() {
   const progressBars = document.querySelectorAll('.skill-progress');
   
-  progressBars.forEach(bar => {
-    const width = bar.getAttribute('data-width');
-    setTimeout(() => {
-      bar.style.width = width + '%';
-    }, 300);
+  progressBars.forEach((bar) => {
+    // Remove any existing transitions to avoid animation
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    bar.classList.remove('animating');
+    bar.style.boxShadow = 'none';
+    
+    // Reset percentage text
+    const percentage = bar.nextElementSibling;
+    if (percentage && percentage.classList.contains('skill-percentage')) {
+      percentage.textContent = '0%';
+    }
   });
+}
+
+// Animate progress bars
+function animateProgressBars() {
+  console.log('animateProgressBars function called');
+  
+  // Only animate if not already animated
+  if (hasAnimated) {
+    console.log('Animation already completed, skipping');
+    return;
+  }
+  
+  const progressBars = document.querySelectorAll('.skill-progress');
+  console.log('Found progress bars:', progressBars.length);
+  
+  // Reset all bars first
+  resetProgressBars();
+  
+  // Small delay to ensure reset is complete
+  setTimeout(() => {
+    progressBars.forEach((bar, index) => {
+      const width = bar.getAttribute('data-width');
+      const percentage = bar.nextElementSibling; // The percentage text
+      
+      console.log(`Progress bar ${index}: width=${width}%`);
+      
+      // Stagger the animation with a delay
+      setTimeout(() => {
+        console.log(`Starting animation for bar ${index}`);
+        // Add shimmer effect
+        bar.classList.add('animating');
+        
+        // Animate the progress bar
+        bar.style.transition = 'width 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        bar.style.width = width + '%';
+        
+        // Animate the percentage text
+        if (percentage) {
+          animatePercentage(percentage, 0, parseInt(width), 1500);
+        }
+        
+        // Add a subtle pulse effect
+        bar.style.boxShadow = '0 0 10px rgba(59, 130, 246, 0.3)';
+        setTimeout(() => {
+          bar.style.boxShadow = 'none';
+        }, 200);
+        
+        // Remove shimmer effect after animation
+        setTimeout(() => {
+          bar.classList.remove('animating');
+        }, 1500);
+        
+      }, index * 200); // Stagger each bar by 200ms
+    });
+  }, 100);
+}
+
+// Animate percentage text
+function animatePercentage(element, start, end, duration) {
+  const startTime = performance.now();
+  
+  function updatePercentage(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Use easing function for smooth animation
+    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+    const currentValue = Math.round(start + (end - start) * easeOutQuart);
+    
+    element.textContent = currentValue + '%';
+    
+    if (progress < 1) {
+      requestAnimationFrame(updatePercentage);
+    }
+  }
+  
+  requestAnimationFrame(updatePercentage);
 }
 
 // Contact form functionality

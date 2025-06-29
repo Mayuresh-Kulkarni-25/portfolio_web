@@ -39,6 +39,57 @@
         </div>
       </nav>
 
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages" style="position: fixed; top: 20px; right: 20px; z-index: 1000; max-width: 400px;">
+            {% for category, message in messages %}
+              <div class="flash-message flash-{{ 'error' if category == 'error' else 'success' if category == 'success' else 'info' }}" 
+                   style="background: {{ '#f0fff4' if category == 'success' else '#fee' if category == 'error' else '#e3f2fd' }}; 
+                          color: {{ '#2f855a' if category == 'success' else '#c53030' if category == 'error' else '#1976d2' }}; 
+                          border: 1px solid {{ '#c6f6d5' if category == 'success' else '#fed7d7' if category == 'error' else '#bbdefb' }}; 
+                          padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+                          animation: slideIn 0.3s ease-out;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-triangle' if category == 'error' else 'info-circle' }}"></i>
+                  <span>{{ message }}</span>
+                  <button onclick="this.parentElement.parentElement.remove()" 
+                          style="background: none; border: none; color: inherit; cursor: pointer; margin-left: auto; font-size: 18px;">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <style>
+            @keyframes slideIn {
+              from { transform: translateX(100%); opacity: 0; }
+              to { transform: translateX(0); opacity: 1; }
+            }
+            .flash-message {
+              transition: all 0.3s ease;
+            }
+            .flash-message:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            }
+          </style>
+          <script>
+            // Auto-remove flash messages after 5 seconds
+            setTimeout(function() {
+              const flashMessages = document.querySelectorAll('.flash-message');
+              flashMessages.forEach(function(message) {
+                message.style.transform = 'translateX(100%)';
+                message.style.opacity = '0';
+                setTimeout(function() {
+                  message.remove();
+                }, 300);
+              });
+            }, 5000);
+          </script>
+        {% endif %}
+      {% endwith %}
+
       <!-- Hero Section -->
       <section id="home" class="hero">
         <div class="hero-container">
@@ -336,6 +387,9 @@
               <a href="tel:+919028836070">
                 <i class="fas fa-phone"></i>
               </a>
+              <a href="/admin" title="Admin Panel">
+                <i class="fas fa-shield-alt"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -343,14 +397,5 @@
     </div>
     
     <script type="module" src="static/main.js"></script>
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const progressBars = document.querySelectorAll(".skill-progress");
-  progressBars.forEach((bar) => {
-    const width = bar.getAttribute("data-width");
-    bar.style.width = width + "%";
-  });
-});
-</script>
   </body>
 </html>
