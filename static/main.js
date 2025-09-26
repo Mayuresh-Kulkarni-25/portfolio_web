@@ -30,11 +30,7 @@ const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/
 const animationDuration = isMobile ? 1000 : 1500; // Shorter animations on mobile
 const staggerDelay = isMobile ? 100 : 200; // Faster stagger on mobile
 
-const link = document.createElement("link");
-link.rel = "stylesheet";
-link.type = "text/css";
-link.href = "style.css"; // 👉 your CSS file path here
-document.head.appendChild(link);
+// CSS is already loaded via the link tag in HTML head
 
 
 // Smooth scrolling for navigation links
@@ -42,10 +38,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
- for better performance
+    
+    if (target) {
+      // Use smooth scrolling on desktop, instant on mobile for better performance
       if (isMobile) {
-        target.scrollIntoView({ block: 'start' });    if (target) {
-      // Use smooth scrolling on desktop, instant on mobile
+        target.scrollIntoView({ block: 'start' });
       } else {
         target.scrollIntoView({
           behavior: 'smooth',
@@ -53,7 +50,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         });
       }
     }
- 
+  });
+});
+
 let ticking = false;
 function updateNavbar() {
   const navbar = document.querySelector('.navbar');
@@ -70,10 +69,7 @@ function updateNavbar() {
 // Navbar background on scroll (optimized for mobile)
 window.addEventListener('scroll', () => {
   if (!ticking) {
-    requestAnimationFrame(updateNav });
-});
-
-// Optimize scroll performance on mobilebar);
+    requestAnimationFrame(updateNavbar);
     ticking = true;
   }
 });
@@ -89,20 +85,22 @@ let hasAnimated = false;
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    console.log('Observer entry:', entry.target.className, 'isIntersecting:', entry.isIntersecting);
+    console.log('Observer entry:', entry.target.className, 'isIntersecting:', entry.isIntersecting, 'intersectionRatio:', entry.intersectionRatio);
     
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
       if (entry.target.classList.contains('proficiency-section')) {
         console.log('Proficiency section detected, calling animateProgressBars');
-        animateProgressBars();
-        hasAnimated = true;
+        // Add a small delay to ensure the element is fully visible
+        setTimeout(() => {
+          animateProgressBars();
+        }, 100);
       }
       
       // Add scroll animation class (only on desktop)
       if (!isMobile) {
         entry.target.classList.add('animate');
       }
-    } else {
+    } else if (!entry.isIntersecting) {
       // When section goes out of view, reset animation state
       if (entry.target.classList.contains('proficiency-section')) {
         console.log('Proficiency section out of view, resetting animation state');
@@ -160,8 +158,8 @@ function resetProgressBars() {
     bar.classList.remove('animating');
     bar.style.boxShadow = 'none';
     
-    // Reset percentage text
-    const percentage = bar.nextElementSibling;
+    // Reset percentage text (fixed selector)
+    const percentage = bar.parentElement.nextElementSibling;
     if (percentage && percentage.classList.contains('skill-percentage')) {
       percentage.textContent = '0%';
     }
@@ -181,6 +179,11 @@ function animateProgressBars() {
   const progressBars = document.querySelectorAll('.skill-progress');
   console.log('Found progress bars:', progressBars.length);
   
+  if (progressBars.length === 0) {
+    console.log('No progress bars found!');
+    return;
+  }
+  
   // Reset all bars first
   resetProgressBars();
   
@@ -188,9 +191,14 @@ function animateProgressBars() {
   setTimeout(() => {
     progressBars.forEach((bar, index) => {
       const width = bar.getAttribute('data-width');
-      const percentage = bar.nextElementSibling; // The percentage text
+      const percentage = bar.parentElement.nextElementSibling; // Fixed: get the percentage element correctly
       
-      console.log(`Progress bar ${index}: width=${width}%`);
+      console.log(`Progress bar ${index}: width=${width}%, percentage element found:`, !!percentage);
+      
+      if (!width) {
+        console.log(`No data-width found for bar ${index}`);
+        return;
+      }
       
       // Stagger the animation with a delay
       setTimeout(() => {
@@ -205,7 +213,7 @@ function animateProgressBars() {
         bar.style.width = width + '%';
         
         // Animate the percentage text
-        if (percentage) {
+        if (percentage && percentage.classList.contains('skill-percentage')) {
           animatePercentage(percentage, 0, parseInt(width), animationDuration);
         }
         
@@ -226,6 +234,9 @@ function animateProgressBars() {
         
       }, index * staggerDelay); // Use mobile-optimized stagger delay
     });
+    
+    // Mark as animated after starting all animations
+    hasAnimated = true;
   }, 100);
 }
 
@@ -254,7 +265,8 @@ function animatePercentage(element, start, end, duration) {
 // Contact form functionality
 const contactForm = document.getElementById('contact-form');
 
-contactForm.addEventListener('submit', function(e) {
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
   e.preventDefault();
   
   // Get form data
@@ -279,7 +291,8 @@ contactForm.addEventListener('submit', function(e) {
   
   // Reset form
   this.reset();
-});
+  });
+}
 
 // Email validation function
 function isValidEmail(email) {

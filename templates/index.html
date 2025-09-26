@@ -10,13 +10,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
   </head>
   <body>
- <script>
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    link.href = "style.css"; 
-    document.head.appendChild(link);
-  </script>
 
     <div id="app">
       <!-- Navigation -->
@@ -402,7 +395,7 @@
             
             <div class="contact-form-card">
               <h3>Send me a message</h3>
-              <form action="/submit" method="POST" >
+              <form action="/submit" method="POST" id="contact-form">
                 <div class="form-group">
                   <input type="text" id="name" name="name" placeholder="Your Name" required>
                 </div>
