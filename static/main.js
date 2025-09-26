@@ -42,10 +42,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      // Use smooth scrolling on desktop, instant on mobile for better performance
+ for better performance
       if (isMobile) {
-        target.scrollIntoView({ block: 'start' });
+        target.scrollIntoView({ block: 'start' });    if (target) {
+      // Use smooth scrolling on desktop, instant on mobile
       } else {
         target.scrollIntoView({
           behavior: 'smooth',
@@ -53,10 +53,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         });
       }
     }
-  });
-});
-
-// Optimize scroll performance on mobile
+ 
 let ticking = false;
 function updateNavbar() {
   const navbar = document.querySelector('.navbar');
@@ -73,7 +70,10 @@ function updateNavbar() {
 // Navbar background on scroll (optimized for mobile)
 window.addEventListener('scroll', () => {
   if (!ticking) {
-    requestAnimationFrame(updateNavbar);
+    requestAnimationFrame(updateNav });
+});
+
+// Optimize scroll performance on mobilebar);
     ticking = true;
   }
 });

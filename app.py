@@ -29,7 +29,7 @@ def login_required(f):
         if 'admin_logged_in' not in session:
             return redirect(url_for('admin_login'))
         return f(*args, **kwargs)
-    return decorated_function
+    return decorated_function 
 
 @app.route('/')
 def index():
